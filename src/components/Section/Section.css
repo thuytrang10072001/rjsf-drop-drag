@@ -1,0 +1,76 @@
+.section-gener{
+    margin-bottom: 1rem;
+}
+
+.icon-trash:hover{
+    color: red;
+}
+
+.section{
+    display: flex;
+    gap: 3%;
+}
+
+.section-item {
+    flex: 1;
+}
+
+.btn-up-down{
+    margin-top: auto;
+    margin-bottom: auto;
+    display: flex;
+    background: #28b6b6;
+
+}
+
+.btn-action-section {
+    background-color: transparent;
+    border: 0;
+    color: white;
+    font-size: 13px;
+    margin: 0 10px 0 10px;
+
+}
+
+.accordion-button{
+    background-color: #28b6b6!important;
+    border-radius: 0!important;
+    outline: 0!important;
+    box-shadow: rgba(222, 226, 230, 0.024) 0px -1px 0px 0px !important;
+    color: white!important;
+    justify-content: space-between!important;
+}
+
+.accordion-button.accordion-action{
+    background-color: transparent!important;
+    flex: 1!important;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.accordion-button:focus {
+    box-shadow: rgba(222, 226, 230, 0.024) 0px -1px 0px 0px !important;
+}
+
+.accordion-button:not(.collapsed)::after {
+    display: none!important;
+}
+.accordion-button::after {
+    display: none!important;
+}
+
+.filter-group.primaryForm.select-icon{
+    color: white;
+}
+
+.form-group {
+    .form-label {
+         top: 0!important;
+    }
+}
+
+.note-image{
+    margin-bottom: auto;
+    margin-top: auto;
+    color: #C7C7CC
+}

@@ -1,0 +1,52 @@
+.form-rjsf{
+    max-width: 100%;
+
+}
+
+.list-item{
+    list-style: none;
+}
+
+.list-button{
+    display: flex;
+    justify-content: space-between;
+    margin: 10%
+}
+.form-section{
+    display: flex;
+    flex-direction: column;
+    gap: 3%
+}
+
+.title-list-section{
+    font-size: 20px;
+}
+
+.list-section{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 40px;
+}
+
+.switch-form{
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}
+.custom-switch.custom-switch-primary{
+    margin-top: 10px
+}
+
+.MuiBox-root.css-178yklu{
+    display: none!important;
+}
+
+.action-list-section{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 20px 0;
+}
+
+.check-input-section{
+    margin-right: 1rem;
+}
+
