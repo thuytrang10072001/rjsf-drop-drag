@@ -1,62 +1,59 @@
 import { Draggable } from 'react-beautiful-dnd';
 import { useState, useEffect, useCallback, useRef } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp, faArrowDown, faTrashCan, faHand, faUpDown, faXmark } from '@fortawesome/free-solid-svg-icons';
-import './Section.css';
-import ModalNotify from '../ModalNotify';
+import { faUpDown, faXmark, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import Accordion from 'react-bootstrap/Accordion';
+import * as Yup from 'yup';
 
+import {generateYupSchema} from '../yup';
+import './Section.css';
+import ModalDelete from '../ModalDelete';
 
 export default function Section (props) {
     const [secDel, setSecDel] = useState('');
-    const moveUp = (key) => {
-        props.setSchema((prevSchema) => {
-            const keys = Object.keys(prevSchema.properties);
-            const index = keys.indexOf(key);
-            console.log(key);
-            if (index > 0) {
-                [keys[index - 1], keys[index]] = [keys[index], keys[index - 1]];
-                const newProperties = {};
-                keys.forEach((k) => {
-                    newProperties[k] = prevSchema.properties[k];
-                });
-                return { ...prevSchema, properties: newProperties };
-            }
-            return prevSchema;
-        });
-        props.setFormData(props.formData);
-    };
-
-    const moveDown = (key) => {
-        props.setSchema((prevSchema) => {
-            const keys = Object.keys(prevSchema.properties);
-            const index = keys.indexOf(key);
-            if (index < keys.length - 1) {
-                [keys[index + 1], keys[index]] = [keys[index], keys[index + 1]];
-                const newProperties = {};
-                keys.forEach((k) => {
-                    newProperties[k] = prevSchema.properties[k];
-                });
-              return { ...prevSchema, properties: newProperties };
-            }
-            return prevSchema;
-        });
-        props.setFormData(props.formData);
-    };
+    const [showIcon, setShowIcon] = useState(true)
+    const [secKey, setSecKey] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const {element, show, setSchema,
+        setTotalSec, totalSec, draggableId,
+        index, keySection, updateShowSec, setShowSections,
+        setValidateCofig, setValidateSchema} = props;
 
     const removeSection = (key) => {
-        props.setSchema((prevSchema) => {
+        setSchema((prevSchema) => {
             const newProperties = prevSchema.properties;
             delete newProperties[key];
             return { ...prevSchema, properties: newProperties };
         })
+
+        setValidateCofig((prev) => {
+            const newConfig = prev;
+            delete newConfig[key];
+            setValidateSchema(Yup.object().shape(generateYupSchema(newConfig)));
+            return newConfig
+        })
+
+        setTotalSec((prev) => {
+            return ({
+                ...prev,
+                [secKey]: totalSec[secKey] - 1
+            })
+        })
     };
+
+
+    useEffect(() => {
+       setSecDel(element.name);
+       setSecKey(element.content.props.schema.section_key);
+       setShowIcon(show[element.name]);
+    },[element.name])
+
     return (
         <>
             <div className='section-gener'>
-                <Draggable draggableId={props.draggableId} index={props.index}>
+                <Draggable draggableId={draggableId} index={index}>
                     {(provided) => (
-                        <li key={props.keySection}
+                        <li key={keySection}
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                         >
@@ -73,26 +70,29 @@ export default function Section (props) {
                                             </button>
                                             <button className="accordion-button accordion-action" type="button"
                                                     data-bs-toggle="collapse"
-                                                    data-bs-target={'#' + props.element.name + '-section'}
-                                                    aria-expanded={props.show[props.element.name] ? 'true' : 'false'}
-                                                    aria-controls={props.element.name + '-section'}
-                                                    onClick={() => {
-                                                        props.setShow((prev) => {
-                                                            return {
-                                                                ...prev,
-                                                                [props.element.name]: !props.show[props.element.name]
-                                                            }
-                                                        });
-                                                    }}
+                                                    data-bs-target={'#' + element.name + '-section'}
+                                                    aria-expanded={show[element.name] ? 'true' : 'false'}
+                                                    aria-controls={element.name + '-section'}
+                                                    onClick={() =>
+                                                        {
+                                                            updateShowSec(element.name, !show[element.name], setShowSections);
+                                                            setShowIcon(!showIcon)
+                                                        }
+                                                    }
                                             >
-                                                {props.element.content.props.schema.title}
-                                                <i className="simple-icon-arrow-down select-icon"></i>
+                                                {element.content.props.schema.title}
+                                                {showIcon ?
+                                                    <FontAwesomeIcon
+                                                        icon={faChevronUp}/>
+                                                    : <FontAwesomeIcon
+                                                        icon={faChevronDown}
+                                                    />
+                                                }
                                             </button>
                                             <button type="button"
                                                     className='btn-action-section btn-trash'
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalNotify"
-                                                    onClick={() => setSecDel(props.element.name)}>
+                                                onClick={() => setIsOpen(true)}
+                                            >
                                                 <FontAwesomeIcon
                                                     icon={faXmark}
                                                 />
@@ -101,21 +101,25 @@ export default function Section (props) {
                                         </div>
 
                                     </h2>
-                                    <div id={props.element.name + '-section'}
-                                         className={props.show[props.element.name] ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'}>
+                                    <div id={element.name + '-section'}
+                                         className={show[element.name] ? 'accordion-collapse collapse show' : 'accordion-collapse collapse'}>
                                         <div className="accordion-body">
-                                            <div className='property-wrapper'>{props.element.content}</div>
+                                            <div className='property-wrapper'>{element.content}</div>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
+
                         </li>
                     )}
                 </Draggable>
             </div>
-            <ModalNotify keySection = {secDel}
-                         removeAction = {removeSection}/>
+            <ModalDelete setIsOpen = {setIsOpen}
+                         isOpen = {isOpen}
+                         secDel = {secDel}
+                         removeAction = {removeSection}
+            />
         </>
 
     );

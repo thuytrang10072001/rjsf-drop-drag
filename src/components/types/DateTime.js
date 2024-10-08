@@ -1,34 +1,56 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
+import { format } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCalendarDays} from '@fortawesome/free-solid-svg-icons';
 
-export default function DateTime ({props}) {
+const CustomDatePickerInput = ({ value, onClick, onFocus }) => (
+    <div class="react-datepicker-wrapper">
+        <div class="react-datepicker__input-container">
+            <input type="text" class="react-datepicker-ignore-onclickoutside" value={value} onClick={onClick} onFocus={onFocus}/>
+            <FontAwesomeIcon icon={faCalendarDays} onClick = {onClick} style={{position: 'absolute', right: '0.5rem', color: '#8E8E93'}}/>
+        </div>
+    </div>
+
+);
+
+export default function DateTime (props) {
+    const { onChange, formData, schema } = props;
+    const [startDate, setStartDate] = useState(null);
+
+    const handleChange = (date) => {
+        const format = formatDate(date);
+        onChange(format);
+        setStartDate(format);
+    }
+
+    const formatDate = (date) => {
+        return format(date, 'yyyy-MM-dd');
+    }
+
+    const handleFocus = () => {
+        if(!startDate){
+            let format = formatDate(new Date());
+            setStartDate(format);
+            onChange(format);
+        }
+    }
+
     useEffect(() => {
-        $('#public_date').datetimepicker({
-            useStrict: true,
-            icons: {
-                time: "simple-icon-calendar",
-                date: "simple-icon-calendar",
-                clear: 'simple-icon-trash',
-                up: "fa fa-arrow-up",
-                down: "fa fa-arrow-down"
-            },
-            format: 'YYYY-MM-DD',
-            buttons: {
-                showClear: true,
-            }
-        });
+        if(formData){
+            setStartDate(formData)
+        }
     }, []);
+
     return (
         <div className="form-group primaryForm has-feedback fv-plugins-icon-container has-success">
-            <label>{props.schema.label}</label>
-            <div className="input-wrap" data-target-input="nearest">
-                <input data-fv-field="public_date" className="form-control custom-datetimepicker"
-                       placeholder="Chọn ngày" data-format="DD/MM/YYYY" data-type="datetime" type="text"
-                       id="public_date" name="public_date" autoComplete="off" data-toggle="datetimepicker"
-                       data-target="#public_date"/>
-                <span className="input-group-text input-group-append input-group-addon"><i
-                    className="far fa-calendar-alt"></i></span>
-            </div>
-            <div className="fv-plugins-message-container"></div>
+            <label>{schema.label}</label>
+            <DatePicker selected={startDate}
+                        customInput={<CustomDatePickerInput />}
+                        onChange={handleChange} onFocus = {handleFocus}
+                        dateFormat="yyyy-MM-dd"
+            />
         </div>
     )
 }

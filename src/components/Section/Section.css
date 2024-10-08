@@ -13,6 +13,7 @@
 
 .section-item {
     flex: 1;
+    max-width: 100%
 }
 
 .btn-up-down{
@@ -27,9 +28,8 @@
     background-color: transparent;
     border: 0;
     color: white;
-    font-size: 13px;
+    font-size: 16px;
     margin: 0 10px 0 10px;
-
 }
 
 .accordion-button{

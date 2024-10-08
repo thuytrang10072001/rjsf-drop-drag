@@ -3,7 +3,6 @@ import { useState, useEffect} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faArrowDown, faTrashCan, faHand, faUpDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import '../Section/Section.css';
-import ModalNotify from '../ModalNotify';
 
 export default function ItemBanner (props){
     const removeItem = (key) => {
@@ -21,28 +20,17 @@ export default function ItemBanner (props){
                         <div className="accordion-item section-item">
                             <h2 className="accordion-header">
                                 <div className='btn-up-down'>
-                                    <button className="accordion-button accordion-action" type="button"
+                                    <button className="accordion-button accordion-action ps-3" type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target={'#' + props.element.name + '-item'}
-                                            // aria-expanded={props.show[props.element.name] ? 'true' : 'false'}
                                             aria-expanded='true'
                                             aria-controls={props.element.name + '-item'}
-                                            // onClick={() => {
-                                            //     props.setShow((prev) => {
-                                            //         return {
-                                            //             ...prev,
-                                            //             [props.element.name]: !props.show[props.element.name]
-                                            //         }
-                                            //     });
-                                            // }}
                                     >
                                         {props.element.content.props.schema.title}
                                         <i className="simple-icon-arrow-down select-icon"></i>
                                     </button>
                                     <button type="button"
                                             className='btn-action-section btn-trash'
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalNotify"
                                             // onClick={() => setSecDel(props.element.name)}
                                     >
                                         <FontAwesomeIcon

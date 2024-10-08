@@ -1,6 +1,36 @@
+.section-form-tab .nav-tabs .nav-link{
+    color: #8E8E93;
+    font-size: 16px;
+}
+
+.section-form-tab .nav-tabs .nav-link:hover{
+    color: #28B6B6
+}
+
+.section-form-tab .nav-tabs .nav-link.active{
+    background-color: #28B6B6;
+    color: white;
+}
+
+.section-form-tab .nav-tabs .nav-link.active::before{
+    border: none;
+    background-color: white
+}
+
+.section-form-tab .nav-tabs .external-tab.nav-link{
+    font-size: 18px
+}
+.section-form-tab .form-rjsf .nav-tabs .nav-link.active{
+    color: #28B6B6;
+    background: transparent;
+    border-bottom: 3px solid #28b6b6;
+}
+
 .form-rjsf{
     max-width: 100%;
-
+    margin-right: auto;
+    margin-left: auto;
+    flex: 1
 }
 
 .list-item{
@@ -23,7 +53,7 @@
 }
 
 .list-section{
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     padding: 40px;
 }
 
@@ -40,6 +70,9 @@
     display: none!important;
 }
 
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2 {
+    /*display: none!important;*/
+}
 .action-list-section{
     display: flex;
     justify-content: space-between;
@@ -50,3 +83,151 @@
     margin-right: 1rem;
 }
 
+.form-group label{
+    z-index: 1!important;
+}
+
+.set-homepage span{
+    font-size: 11px;
+}
+
+.primaryForm{
+    margin-bottom: 2.25rem!important;
+}
+
+.ReactModal__Overlay.ReactModal__Overlay--after-open{
+    z-index: 2;
+}
+
+.btn-modal-link{
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    right: 1.5rem;
+    padding-bottom: 5%;
+}
+
+.btn-action-link{
+    background-color: transparent;
+    border: 0;
+    color: grey;
+    font-size: 13px;
+}
+
+.frame-add-link{
+    width: 15vw;
+    display: inline-block;
+    border: grey solid 0.5px;
+    border-radius: 5px;
+    padding: 0.5rem
+}
+
+.link{
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-decoration: underline;
+    color: #007FFF;
+    width: 65%;
+}
+
+.primaryForm input {
+    outline: none!important;
+}
+
+.react-datepicker__input-container{
+    display: flex!important;
+    align-items: center!important;
+}
+
+.react-datepicker__calendar-icon{
+    right: 0;
+    fill: #8e8e93;
+}
+
+.react-datepicker__view-calendar-icon input{
+    padding: 6px 10px 5px 10px!important;
+}
+
+
+.tabs-icon {
+    position: absolute;
+    right: 30px;
+    top: 1rem;
+    background-color: transparent;
+    border: 0;
+    color: #484848;
+    font-size: 18px;
+    padding: 0
+}
+
+
+.MuiList-root.MuiList-dense.css-1uzmcsd{
+    position: absolute;
+    bottom: 0.25rem;
+}
+
+.btnSecondary {
+    color: #28B6B6;
+    background-color: white;
+    border-color:  #28B6B6;
+    margin-right: 0.5rem;
+ }
+
+.btnSecondary:hover{
+    background-color: #28B6B6;
+    color: white;
+}
+
+.field-common-readonly{
+    color: #8E8E93;
+    margin-bottom: 1.75rem
+}
+
+.dz-error-message {
+    top: 60px;
+    left: 0;
+    right: 0;
+    max-width: 220px;
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 20px;
+    padding: 10px;
+    border-radius: 15px;
+    background: #c43d4b;
+    display: block;
+    z-index: 1000;
+    position: absolute;
+}
+
+.primaryForm .react-datepicker-popper{
+    z-index: 2;
+}
+
+.dropzone-files .dropzone .dz-preview .dz-error-message{
+    background-color: rgb(196, 61, 75);
+    opacity: 0;
+    background-image: none;
+    display: block;
+}
+
+.dropzone-files .dropzone .dz-preview .dz-progress {
+    height: 5px;
+    background-color: rgb(122, 183, 240);
+    margin-left: 0;
+}
+
+.dropzone-files .dropzone .dz-preview .dz-error-mark{
+    opacity: 1;
+}
+
+.dropzone-files .dropzone .dz-preview .dz-success-mark{
+    opacity: 1;
+    animation: passing-through 3s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.dropzone .dz-preview:hover .dz-error-message{
+    opacity: 1;
+}

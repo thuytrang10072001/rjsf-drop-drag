@@ -1,42 +1,12 @@
-const uiUser =  {
-    name: {
-        "ui:field": "textField",
-    },
-    pass:{
-        "ui:field": "textField"
-    }
-}
-
-const uiInfo = {
-    age: {
-        "ui:field": "textField",
-    },
-    show:{
-        "ui:field": "selectSingleField",
-    },
-    street_address: {
-        "ui:field": "textField",
-    },
-}
-
 const uiCommon = {
-    title: {
-        "ui:field": "textField",
+    public_date: {
+        "ui:field": "datePicker",
     },
-    url:{
-        "ui:field": "textField"
+    status:{
+        "ui:field": "selectSingleField"
     },
-    creation_date: {
-        "ui:field": "textField",
-    },
-    show:{
+    is_home_page: {
         "ui:field": "switchField"
-    },
-    home_page: {
-        "ui:field": "switchField"
-    },
-    image: {
-        "ui:field": "imageField"
     }
 }
 
@@ -92,6 +62,181 @@ const uiHeroBanner = {
     }
 }
 
+const uiBanner = {
+    "image": {
+        "ui:field": 'imageField'
+    },
+    "link": {
+        "ui:field": 'linkForm'
+    }
+}
+
+const uiLink = {
+    "ui:order": ["title", "type_link", "module", "url_module", "url", "new_tab"],
+    title: {
+        "ui:field": 'textField'
+    },
+    type_link: {
+        "ui:field": "selectSingleField",
+    },
+    module: {
+        "ui:field": "selectSingleField"
+    },
+    url_module: {
+        "ui:field": "selectSingleField"
+    },
+    url: {
+        "ui:field" : "textField"
+    },
+    new_tab: {
+        "ui:field": 'checkboxField'
+    }
+}
+
+const secBanner = {
+    "section_key": 'banner',
+    "title": 'Banner',
+    "type": 'object',
+        "properties": {
+        "image": {
+            "type": 'array',
+            'label': "Banner desktop",
+            "controlType": 'upload'
+        },
+        "link":{
+            "type": 'object',
+            "controlType": "linkForm",
+            "label": "Thêm đường dẫn vào bannner",
+            "required": ["title", "type_link", "url", "url_module", "module"],
+            "properties": {
+                "title": {
+                    "type": 'string',
+                    "controlType": 'text',
+                    "label": 'Tiêu đề đường dẫn'
+                },
+                "type_link": {
+                    "type": 'string',
+                    "controlType": 'select-single',
+                    "label": "Chọn loại đường dẫn",
+                    "placeholder": "Chọn loại đường dẫn",
+                    "enum": ["0", "1"],
+                    "data": [
+                        {
+                            "value": "0",
+                            "label": "Đường dẫn nội bộ"
+                        },
+                        {
+                            "value": "1",
+                            "label": "Đường dẫn ngoài"
+                        }
+                    ]
+                },
+                "new_tab":{
+                    "type": "boolean",
+                    "controlType": "checkbox",
+                    "label": "Mở đường dẫn ở tab mới"
+                }
+            },
+            "dependencies_link": {
+                "type_link": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "type_link": { "enum": ["1"] },
+                                "url": { "type": "string", "label": "Nhập đường dẫn", "controlType": 'text' },
+                            },
+                            "required": ['url']
+                        },
+                        {
+                            "properties": {
+                                "type_link": { "enum": ["0"] },
+                                "module": {
+                                    "type": "string",
+                                    "label": "Chọn module",
+                                    "controlType": "select-single",
+                                    "placeholder": "Chọn module",
+                                    "data": [
+                                        {
+                                            "value": "page",
+                                            "label": "Trang"
+                                        },
+                                        {
+                                            "value": "article",
+                                            "label": "Bài viết"
+                                        },
+                                        {
+                                            "value": "catalogue",
+                                            "label": "Danh mục"
+                                        },
+                                        {
+                                            "value": "contact",
+                                            "label": "Liên hệ"
+                                        },
+                                        {
+                                            "value": "product_service",
+                                            "label": "Sản phẩm dịch vụ"
+                                        }
+                                    ]
+                                },
+                                "url_module": {
+                                    "type": "string",
+                                    "label": "Chọn đường dẫn",
+                                    "controlType": "select-single",
+                                    "placeholder": "Chọn đường dẫn",
+                                    "data": [
+                                        {
+                                            "value": "/page/123456",
+                                            "label": "/page/123456"
+                                        },
+                                        {
+                                            "value": "/page/456789",
+                                            "label": "/page/456789"
+                                        }
+                                    ]
+                                },
+                            }
+                        }
+                    ]
+                }
+            },
+            "ui_section": uiLink,
+            "validate_section": {
+                "title": {
+                    "type": 'string',
+                    "required": 'Vui lòng nhập tiêu đề đường dẫn',
+                },
+                "url": {
+                    "type": 'string',
+                    "required": 'Vui lòng nhập đường dẫn',
+                },
+                "type_link": {
+                    "type": 'string',
+                    "required": "Vui lòng chọn đường dẫn"
+                },
+                "module": {
+                    "type": "string",
+                    "required": "Vui lòng chọn module"
+                },
+                "url_module": {
+                    "type": "string",
+                    "required": "Vui lòng chọn đường dẫn"
+                }
+            }
+        }
+    },
+    "ui_section": uiBanner,
+    "validate_section": {
+        "type": "object",
+        "properties":{
+            "link": {
+                "type": "object",
+                "test": "Vui lòng chọn đường dẫn",
+                "required": "Vui lòng chọn đường dẫn"
+            }
+        }
+    }
+}
+
 const secHeroBanner = {
     section_key: 'hero_banner',
     title: 'Hero Banner',
@@ -115,53 +260,65 @@ const secHeroBanner = {
                 link:{
                     type: 'string',
                     label: "Thêm đường dẫn vào bannner"
-                    // properties:{
-                    //     title:{
-                    //         label: "Tiêu đề đường dẫn",
-                    //         type: 'string',
-                    //         controlType: 'text'
-                    //     },
-                    //     category_link: {
-                    //         label: 'Chọn loại đường dẫn',
-                    //         type: 'string',
-                    //         controlType: 'select-single',                }
-                    // }
                 }
             },
             ui_section: uiItemBanner
         }
     }
 }
-const secUser = {
-    section_key: 'user',
-    title: 'User',
-    description: 'Information Login',
-    type: 'object',
-    properties: {
-        name: { type: 'string', label: 'Tên:', controlType: 'text' },
-        pass: { type: 'string', label: 'Mật khẩu:', controlType: 'password' },
+
+const uiContent = {
+    title: {
+        "ui:field": "textField",
     },
-    ui_section: uiUser,
+    url_key:{
+        "ui:field": "textField"
+    },
+    meta_image: {
+        "ui:field": "imageField"
+    },
+    status:{
+        "ui:field": "switchField"
+    }
 }
 
-const secInfo = {
-    section_key: 'info',
-    title: 'Info',
-    description: 'Information User',
+const secContent = {
+    section_key: 'content',
+    title: "Nội dung chính",
     type: 'object',
+    required: ['title'],
     properties: {
-        age: {
+        title: {
             type: 'string',
-            controlType: 'number',
-            label: "Tuổi:"
+            controlType: 'text',
+            label: "Tiêu đề trang",
+            placeholder: "Tiêu đề trang"
         },
-        show: {
+        url_key: {
             type: 'string',
-            controlType: 'select-single',
-            label: "Hiển thị:",
+            label: "Đường dẫn",
+            controlType: 'text',
+            placeholder: "Đường dẫn"
         },
+        meta_image: {
+            type: 'array',
+            label: "Feature Image",
+            controlType: 'upload'
+        },
+        status: {
+            type: 'boolean',
+            label: "Hiển thị",
+            controlType: 'switch',
+            default: false
+        }
     },
-    ui_section: uiInfo,
+    ui_section: uiContent,
+    validate_section: {
+        title: {
+            type: 'string',
+            required: 'Vui lòng nhập tiêu đề trang',
+        }
+    }
 }
 
 const secCommon = {
@@ -170,38 +327,34 @@ const secCommon = {
     description: 'Information Common',
     type: 'object',
     properties: {
-        title: {
-            type: 'string',
-            controlType: 'text',
-            label: "Tiêu đề trang:"
-        },
-        url: {
-            type: 'string',
-            label: "Đường dẫn:",
-            controlType: 'text'
-        },
-        creation_date: {
-            type: 'string',
-            label: "Ngày đăng:",
-            controlType: 'date'
-        },
-        show: {
+        status: {
             type: 'boolean',
-            label: "Hiển thị:",
-            controlType: 'switch',
-            default: false
+            label: "Trạng thái",
+            controlType: 'select-single',
+            data: [
+                {
+                    "value": 0,
+                    "label": "Chưa xử lý"
+                },
+                {
+                    "value": 1,
+                    "label": "Kích hoạt"
+                }
+            ],
+            default: 1
         },
-        home_page: {
+        public_date: {
+            type: 'string',
+            label: "Ngày đăng",
+            controlType: 'date',
+            placeholder: "Ngày đăng"
+        },
+        is_home_page: {
             type: 'boolean',
             label: "Đặt làm trang chủ:",
             controlType: 'switch',
             default: false
         },
-        image: {
-            type: 'string',
-            label: "Meta Image:",
-            controlType: 'upload'
-        }
     },
     ui_section: uiCommon,
 }
@@ -210,26 +363,22 @@ const schemaForm = {
     type: 'object',
     title: 'React Json Schema Form',
     definitions: {
-        // user: secUser,
-        // info: secInfo,
-        common: secCommon,
-        hero_banner: secHeroBanner,
+        content: secContent,
+        // banner: secBanner
+        // hero_banner: secHeroBanner,
         // item: secItemBanner
     },
     properties: {
-        common: {
-            $ref: '#/definitions/common',
+        content: {
+            $ref: '#/definitions/content'
         },
-        hero_banner: {
-            $ref: '#/definitions/hero_banner'
-        }
-        // user: {
-        //     $ref: '#/definitions/user',
-        // },
-        // info: {
-        //     $ref: '#/definitions/info',
-        // },
+        // banner: {
+        //     $ref: '#/definitions/banner'
+        // }
+        // hero_banner: {
+        //     $ref: '#/definitions/hero_banner'
+        // }
     },
 };
 
-export {secInfo, secUser, uiUser, uiInfo, uiHeroBanner, uiCommon, uiItemBanner, schemaForm}
+export {uiHeroBanner, uiCommon, uiItemBanner, schemaForm, uiBanner, uiLink, uiContent}

@@ -36,7 +36,6 @@ export default function HeroBanner (props){
     }
 
     useEffect(() => {
-        console.log(props.props)
         setKeyBanner(props.props?.idSchema?.$id?.split('root_')[1]);
         setItems(props.props?.properties);
     }, []);

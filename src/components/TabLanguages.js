@@ -1,4 +1,22 @@
-export default function TabLanguages () {
+export default function TabLanguages (props) {
+
+    // const handleClick = (languageCode) => {
+    //     const langCode = props.langCurrent;
+    //     props.setLangDatas((prev) => {
+    //         return({
+    //             ...prev,
+    //             [langCode]: props.formData.current})
+    //     });
+    //     if(props.langDatas.hasOwnProperty(languageCode)){
+    //         props.formData.current = props.langDatas[languageCode];
+    //         props.setFormData(props.langDatas[languageCode]);
+    //     }else{
+    //         props.formData.current = {};
+    //         props.setFormData({});
+    //     }
+    //     props.setLangCurrent(languageCode);
+    // }
+
     return(
         <div className="col-12 page-nav mb-3">
             <ul className="nav nav-pills mb-4" id="pills-page-tab" role="tablist">

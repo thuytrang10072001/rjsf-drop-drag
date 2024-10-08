@@ -1,20 +1,23 @@
 
-export default function SwitchForm ({props}){
+export default function SwitchForm (props){
+    const { schema, idSchema, formData, onChange } = props;
+
     return (
         <div className="set-homepage">
             <div className="form-group primaryForm has-feedback fv-plugins-icon-container pt-0">
-                <span>{props.schema.label}</span>
+                <span>{schema.label}</span>
                 <div className="custom-switch custom-switch-primary">
-                    <input name={props.id}
+                    <input name={idSchema.$id}
                            className="custom-switch-input"
-                           id={props.idSchema.$id}
+                           id={idSchema.$id}
                            type="checkbox"
-                           data-fv-field={props.id}
-                           checked={props.formData}
+                           data-fv-field={idSchema.$id}
+                           checked={formData}
+                           value = {formData}
                            onChange={() => {
-                               props.onChange(!props.formData);
+                               onChange(!props.formData);
                            }}/>
-                    <label className="custom-switch-btn" htmlFor={props.idSchema.$id}></label>
+                    <label className="custom-switch-btn" htmlFor={idSchema.$id}></label>
                 </div>
                 <div className="fv-plugins-message-container"></div>
             </div>
